@@ -16,6 +16,7 @@
     },
     "require": {
         "php": ">=7.0",
+        "ext-amqp" : "*",
         "vain/core": "^0.3"
     },
     "repositories": [
