@@ -9,7 +9,7 @@
  * @link      https://github.com/allflame/vain-amqp
  */
 
-namespace Vain\Amqp\Connection;
+namespace Vain\Amqp\Connection\Factory;
 
 use Vain\Connection\ConnectionInterface;
 use Vain\Connection\Factory\AbstractConnectionFactory;
@@ -26,6 +26,6 @@ class AmqpConnectionFactory extends AbstractConnectionFactory
      */
     public function createConnection(array $config) : ConnectionInterface
     {
-        trigger_error('Method createConnection is not implemented', E_USER_ERROR);
+
     }
 }
