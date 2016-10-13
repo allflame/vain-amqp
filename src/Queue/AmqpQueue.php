@@ -97,6 +97,8 @@ class AmqpQueue implements QueueInterface
     public function subscribe()
     {
         if (null !== $this->queue) {
+            $this->queue->bind($this->exchange->getName(), $this->queue->getName());
+
             return $this;
         }
 
@@ -109,9 +111,7 @@ class AmqpQueue implements QueueInterface
             $declareQueue
             ) = $this->getCredentials($this->configData);
 
-        $this->amqpConnection->establish()->connect();
-
-        $channel = new \AMQPChannel($this->amqpConnection->establish());
+        $channel = new \AMQPChannel( $this->amqpConnection->establish());
         $exchange = new \AMQPExchange($channel);
         $exchange->setType($exchangeType);
         if ($exchangeName) {
@@ -145,8 +145,7 @@ class AmqpQueue implements QueueInterface
      */
     public function unSubscribe()
     {
-        $this->exchange = $this->queue = null;
-        $this->amqpConnection->establish()->disconnect();
+        $this->queue->cancel();
 
         return $this;
     }
@@ -156,7 +155,9 @@ class AmqpQueue implements QueueInterface
      */
     public function enqueue(QueueMessageInterface $queueMessage)
     {
+        $this->exchange->publish(json_encode($queueMessage->toArray()), $queueMessage->getDestination());
 
+        return $this;
     }
 
     /**
@@ -164,6 +165,8 @@ class AmqpQueue implements QueueInterface
      */
     public function dequeue() : QueueMessageInterface
     {
-        trigger_error('Method dequeue is not implemented', E_USER_ERROR);
+        $this->queue->consume();
+
+        return;
     }
 }

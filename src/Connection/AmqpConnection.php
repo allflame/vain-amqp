@@ -31,44 +31,12 @@ class AmqpConnection extends AbstractConnection
         $port = $configData['port'];
         $login = $configData['login'];
         $password = $configData['password'];
-        $exchangeName = '';
-        $declareExchange = false;
-        $exchangeType = $configData['exchange']['type'];
-        $queueName = '';
-        $declareQueue = false;
-        $queueFlags = AMQP_EXCLUSIVE;
-
-        if (array_key_exists('name', $configData['exchange'])) {
-            $exchangeName = $configData['exchange']['name'];
-        }
-
-        if (array_key_exists('declare', $configData['exchange'])) {
-            $declareExchange = $configData['exchange']['declare'];
-        }
-
-        if (array_key_exists('name', $configData['queue'])) {
-            $queueName = $configData['queue']['name'];
-        }
-
-        if (array_key_exists('declare', $configData['queue'])) {
-            $declareQueue = $configData['queue']['declare'];
-        }
-
-        if (array_key_exists('flags', $configData['queue'])) {
-            $queueFlags = $configData['queue']['flags'];
-        }
 
         return [
             $host,
             $port,
             $login,
-            $password,
-            $exchangeName,
-            $exchangeType,
-            $declareExchange,
-            $queueName,
-            $queueFlags,
-            $declareQueue,
+            $password
         ];
     }
 
@@ -84,7 +52,8 @@ class AmqpConnection extends AbstractConnection
             $password,
             ) = $this->getCredentials($configData);
 
-        $amqpConnection = new \AMQPConnection();
+        $amqpConnection = new \AMQPConnection(['host' => $host, 'port' => $port, 'login' => $login, 'password' => $password]);
+        $amqpConnection->connect();
 
         return $amqpConnection;
     }
