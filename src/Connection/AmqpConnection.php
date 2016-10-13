@@ -17,6 +17,8 @@ use Vain\Connection\AbstractConnection;
  * Class AmqpConnection
  *
  * @author Taras P. Girnyk <taras.p.gyrnik@gmail.com>
+ *
+ * @method \AMQPConnection establish
  */
 class AmqpConnection extends AbstractConnection
 {
@@ -80,39 +82,9 @@ class AmqpConnection extends AbstractConnection
             $port,
             $login,
             $password,
-            $exchangeName,
-            $exchangeType,
-            $declareExchange,
-            $queueName,
-            $queueFlags,
-            $declareQueue
             ) = $this->getCredentials($configData);
 
         $amqpConnection = new \AMQPConnection();
-        $amqpConnection->connect();
-        $channel = new \AMQPChannel($amqpConnection);
-
-        $exchange = new \AMQPExchange($channel);
-        $exchange->setType($exchangeType);
-        if ($exchangeName) {
-            $exchange->setName($exchangeName);
-        }
-
-        if ($declareExchange) {
-            $exchange->declareExchange();
-        }
-        $queue = new \AMQPQueue($channel);
-        $queue->setFlags($queueFlags);
-
-        if ($queueName) {
-            $queue->setName($queueName);
-        }
-
-        if ($declareQueue) {
-            $queue->declareQueue();
-        }
-
-        $queue->bind($exchange->getName(), $queue->getName());
 
         return $amqpConnection;
     }
