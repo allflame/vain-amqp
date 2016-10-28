@@ -1,0 +1,18 @@
+parameters:
+  amqp.config.required.fields: ['type', 'host', 'port']
+
+services:
+  connection.factory.amqp.trust:
+    class: Vain\Amqp\Connection\Factory\AmqpConnectionFactory
+    arguments: ['amqp']
+  connection.factory.amqp.assert:
+    class: Vain\Connection\Factory\Decorator\Assert\ConnectionFactoryAssertDecorator
+    arguments: ['@connection.factory.amqp.trust', '%amqp.config.required.fields%']
+  connection.factory.amqp:
+    alias: connection.factory.amqp.assert
+    tags:
+      - {name: connection.factory}
+  queue.factory.amqp:
+    class: Vain\Amqp\Queue\Factory\AmqpQueueFactory
+    tags:
+      - {name: queue.factory}
