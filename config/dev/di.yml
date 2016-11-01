@@ -1,0 +1,11 @@
+imports:
+  - { resource: '../di.yml' }
+
+parameters:
+  amqp.config.required.fields: ['type', 'host', 'port']
+
+services:
+  connection.factory.amqp:
+    class: Vain\Connection\Factory\Decorator\Assert\ConnectionFactoryAssertDecorator
+    decorates: connection.factory.amqp
+    arguments: ['@connection.factory.amqp.inner', '%amqp.config.required.fields%']
