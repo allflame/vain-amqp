@@ -11,7 +11,7 @@
 
 namespace Vain\Amqp\Connection;
 
-use Vain\Connection\AbstractConnection;
+use Vain\Core\Connection\AbstractConnection;
 
 /**
  * Class AmqpConnection

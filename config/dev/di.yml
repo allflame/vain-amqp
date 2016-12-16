@@ -6,6 +6,6 @@ parameters:
 
 services:
   connection.factory.amqp:
-    class: Vain\Connection\Factory\Decorator\Assert\ConnectionFactoryAssertDecorator
+    class: Vain\Core\Connection\Factory\Decorator\Assert\ConnectionFactoryAssertDecorator
     decorates: connection.factory.amqp
     arguments: ['@connection.factory.amqp.inner', '%amqp.config.required.fields%']
