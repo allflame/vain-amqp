@@ -12,8 +12,8 @@
 namespace Vain\Amqp\Queue;
 
 use Vain\Amqp\Connection\AmqpConnection;
-use Vain\Queue\Message\QueueMessageInterface;
-use Vain\Queue\QueueInterface;
+use Vain\Core\Queue\Message\QueueMessageInterface;
+use Vain\Core\Queue\QueueInterface;
 
 /**
  * Class AmqpQueue
