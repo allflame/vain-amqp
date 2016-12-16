@@ -11,7 +11,7 @@
 
 namespace Vain\Amqp\Queue\Factory;
 
-use Vain\Connection\ConnectionInterface;
+use Vain\Core\Connection\ConnectionInterface;
 use Vain\Queue\Factory\AbstractQueueFactory;
 
 /**
